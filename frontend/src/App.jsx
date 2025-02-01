@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import './index.css';
+import { useState } from "react";
 
 import HomePage from "./pages/home/HomePage";
 import { Toaster } from "react-hot-toast";
