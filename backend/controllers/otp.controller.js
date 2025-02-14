@@ -36,3 +36,18 @@ export const sendOtp = async (req, res) => {
     res.status(500).json({ message: "Failed to send OTP", error: error.message });
   }
 };
+
+// Verify OTP
+export const verifyOtp = (req, res) => {
+  const { email, otp } = req.body;
+  if (!email || !otp) {
+    return res.status(400).json({ message: "Email and OTP are required" });
+  }
+
+  if (!otpStorage[email] || otpStorage[email] !== otp) {
+    return res.status(400).json({ message: "Invalid OTP" });
+  }
+
+  delete otpStorage[email]; // Remove OTP after successful verification
+  res.status(200).json({ message: "OTP verified successfully!" });
+};
