@@ -37,6 +37,15 @@ export default function Location() {
               country: country || 'Unknown Country'
             });
           }
+
+          // Fetch weather using Open-Meteo API
+          const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+          );
+          const weatherData = await weatherResponse.json();
+          if (weatherData.current_weather) {
+            setWeather(`${weatherData.current_weather.temperature}°C, ${weatherData.current_weather.weathercode}`);
+          }
         } catch (error) {
           toast.error('Error fetching location or weather data');
         }
