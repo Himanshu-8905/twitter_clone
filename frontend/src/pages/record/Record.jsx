@@ -108,6 +108,37 @@ export default function Record() {
       setIsVerifyingOtp(false);
     }
   };
+  const handlePostTweet = async () => {
+    if (!audioBlob) {
+      toast.error("No audio recorded!");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("text", "New audio tweet");
+      formData.append("audio", audioBlob);
+
+      const response = await fetch("/api/posts/create", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to post audio tweet");
+      }
+
+      toast.success("Audio tweet posted successfully!");
+      setAudioBlob(null);
+      setIsOtpVerified(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Record Audio Tweet</h1>
