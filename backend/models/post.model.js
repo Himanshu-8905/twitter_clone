@@ -42,6 +42,10 @@ const postSchema = new mongoose.Schema(
 				},
 			},
 		],
+		subscriptionPost: {
+			type: Boolean,
+			default: false, // True if it's a premium-only post
+		},
 	},
 	{ timestamps: true }
 );
@@ -49,3 +53,4 @@ const postSchema = new mongoose.Schema(
 const Post = mongoose.model("Post", postSchema);
 
 export default Post;
+

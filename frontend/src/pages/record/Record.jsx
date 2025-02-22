@@ -108,6 +108,7 @@ export default function Record() {
       setIsVerifyingOtp(false);
     }
   };
+
   const handlePostTweet = async () => {
     if (!audioBlob) {
       toast.error("No audio recorded!");
@@ -139,6 +140,7 @@ export default function Record() {
       toast.error(error.message);
     }
   };
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Record Audio Tweet</h1>

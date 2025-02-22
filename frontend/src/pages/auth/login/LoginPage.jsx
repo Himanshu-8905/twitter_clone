@@ -9,6 +9,7 @@ import { MdPassword } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const LoginPage = () => {
+
 	const [formData, setFormData] = useState({
 		username: "",
 		password: "",
@@ -30,14 +31,25 @@ const LoginPage = () => {
 					},
 					body: JSON.stringify({ username, password }),
 				});
-
+	
 				const data = await res.json();
-
+				console.log("API Response:", data);
+	
 				if (!res.ok) {
 					throw new Error(data.error || "Something went wrong");
 				}
+	
+				// ✅ Store token in localStorage
+				if (data.token) {
+					localStorage.setItem("token", data.token);
+					console.log("Token saved successfully:", data.token);
+				} else {
+					console.error("No token received!");
+				}
+	
+				return data; // ✅ Return the data
 			} catch (error) {
-				throw new Error(error);
+				throw new Error(error.message);
 			}
 		},
 		onSuccess: () => {
@@ -45,6 +57,7 @@ const LoginPage = () => {
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
 		},
 	});
+	
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -103,3 +116,6 @@ const LoginPage = () => {
 	);
 };
 export default LoginPage;
+
+
+

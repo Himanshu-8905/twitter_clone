@@ -1,9 +1,16 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Nodemailer transporter setup
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Change as needed
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address
+    pass: process.env.EMAIL_PASS, // Your email password or app password
+  },
+});
 
 // In-memory OTP storage (Replace this with DB logic in production)
 const otpStorage = {};
@@ -18,21 +25,19 @@ export const sendOtp = async (req, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
   try {
-    const response = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>", // ✅ Replace with verified sender email
-      to: [email],
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER, // Sender email
+      to: email,
       subject: "Your OTP Code",
       text: `Your OTP code is: ${otp}`,
     });
-
-    console.log("Resend API Response:", response);
 
     // Store OTP for verification (Use a DB in production)
     otpStorage[email] = otp;
 
     res.status(200).json({ message: "OTP sent successfully!" });
   } catch (error) {
-    console.error("Resend API Error:", error);
+    console.error("Nodemailer Error:", error);
     res.status(500).json({ message: "Failed to send OTP", error: error.message });
   }
 };

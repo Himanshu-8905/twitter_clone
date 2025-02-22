@@ -60,10 +60,6 @@ const Post = ({ post }) => {
 			}
 		},
 		onSuccess: (updatedLikes) => {
-			// this is not the best UX, bc it will refetch all posts
-			// queryClient.invalidateQueries({ queryKey: ["posts"] });
-
-			// instead, update the cache directly for that post
 			queryClient.setQueryData(["posts"], (oldData) => {
 				return oldData.map((p) => {
 					if (p._id === post._id) {
@@ -153,12 +149,26 @@ const Post = ({ post }) => {
 					</div>
 					<div className='flex flex-col gap-3 overflow-hidden'>
 						<span>{post.text}</span>
+						
+						{/* Conditionally Render Media (Image, Audio, Video) */}
 						{post.img && (
 							<img
 								src={post.img}
 								className='h-80 object-contain rounded-lg border border-gray-700'
-								alt=''
+								alt='Post Image'
 							/>
+						)}
+						{post.audio && (
+							<audio controls className='w-full mt-2'>
+								<source src={post.audio} type="audio/mp3" />
+								Your browser does not support the audio element.
+							</audio>
+						)}
+						{post.video && (
+							<video controls className='w-full mt-2'>
+								<source src={post.video} type="video/mp4" />
+								Your browser does not support the video tag.
+							</video>
 						)}
 					</div>
 					<div className='flex justify-between mt-3'>
@@ -172,7 +182,6 @@ const Post = ({ post }) => {
 									{post.comments.length}
 								</span>
 							</div>
-							{/* We're using Modal Component from DaisyUI */}
 							<dialog id={`comments_modal${post._id}`} className='modal border-none outline-none'>
 								<div className='modal-box rounded border border-gray-600'>
 									<h3 className='font-bold text-lg mb-4'>COMMENTS</h3>
@@ -253,4 +262,5 @@ const Post = ({ post }) => {
 		</>
 	);
 };
+
 export default Post;
