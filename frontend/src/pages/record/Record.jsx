@@ -19,6 +19,13 @@ export default function Record() {
   }
 
   const startRecording = async () => {
+    const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+    if (!(hours === 10 || (hours === 11 && minutes === 0))) {
+      toast.error("Recordings are only available between 10:00 AM and 11:00 AM.");
+      return;
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);

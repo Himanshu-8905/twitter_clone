@@ -23,11 +23,11 @@ export default function Subscriptions() {
       const hours = now.getHours();
       const minutes = now.getMinutes();
   
-      // Allow subscriptions only between 10:00 AM and 11:00 AM
-      // if (!(hours === 10 || (hours === 11 && minutes === 0))) {
-      //   toast.error("Subscriptions are only available between 10:00 AM and 11:00 AM.");
-      //   return;
-      // }
+     // Allow subscriptions only between 10:00 AM and 11:00 AM
+      if (!(hours === 10 || (hours === 11 && minutes === 0))) {
+        toast.error("Subscriptions are only available between 10:00 AM and 11:00 AM.");
+        return;
+      }
   
       const token = localStorage.getItem("token");
   
