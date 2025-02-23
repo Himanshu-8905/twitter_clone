@@ -47,7 +47,7 @@ app.use("/api/subscription", subscriptionRoutes);
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://twitter-lt52.onrender.com"
+  "https://twitter-clone-i7ah.onrender.com"
 ];
 
 app.use(cors({
