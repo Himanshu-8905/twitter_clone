@@ -36,7 +36,7 @@ export default function Subscriptions() {
         return;
       }
   
-      const response = await fetch("http://localhost:3000/api/create-checkout-session", {
+      const response = await fetch("https://twitter-clone-i7ah.onrender.com/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ plan: plan.name, price: plan.price }),
