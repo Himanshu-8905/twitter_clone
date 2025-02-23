@@ -167,13 +167,11 @@ app.post("/api/confirm-subscription", async (req, res) => {
 // ✅ Helper function to confirm subscription
 const confirmSubscription = async (userId, sessionId) => {
   try {
-    console.log("Confirming subscription for session:", sessionId);
 
     // Fetch session details
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-   // console.log("session is" , session);
     if (!session || session.payment_status !== "unpaid") {
-      console.log("Payment not successful for session:", sessionId);
+      console.log("Payment not successful for session:");
       return;
     }
 
@@ -346,7 +344,6 @@ const updateUsers = async () => {
         },
       }
     );
-    console.log("✅ Users updated with default subscription.");
   } catch (error) {
     console.error("❌ Error updating users:", error);
   }
