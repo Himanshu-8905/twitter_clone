@@ -204,55 +204,6 @@ const confirmSubscription = async (userId, sessionId) => {
     console.error("Subscription confirmation error:", error);
   }
 };
-
-
-
-// app.get("/api/user", async (req, res) => {
-//   try {
-//     const authHeader = req.headers.authorization;
-//     if (!authHeader) {
-//       return res.status(401).json({ error: "No token provided" });
-//     }
-
-//     const token = authHeader.split(" ")[1];
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     const userId = decoded.userId;
-
-//     const user = await User.findById(userId).select("-password");
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.error("Error fetching user:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
-
-
-
-// app.get("/subscription", protectRoute, async (req, res) => {
-//   try {
-//     const userId = req.user.id; // Extract user ID from token
-//     const user = await User.findById(userId).select("subscription"); // Fetch subscription details
-
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     res.json(user.subscription); // Send only subscription data
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// });
-
-
-
-
-
 app.get("/api/user", async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
